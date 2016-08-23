@@ -1,0 +1,105 @@
+unit uMakePayment;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Imaging.pngimage, Vcl.Imaging.jpeg, Vcl.ExtCtrls, Vcl.Imaging.GIFImg;
+
+type
+  TfrmPayment = class(TForm)
+    txtName: TLabel;
+    lblUser: TLabel;
+    txtAdmNo: TEdit;
+    FDQuerySelect: TFDQuery;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    btnPay: TBitBtn;
+    btnCancel: TBitBtn;
+    FDQuerySave: TFDQuery;
+    Image1: TImage;
+    Label4: TLabel;
+    Image5: TImage;
+    Image2: TImage;
+    txtPaid: TEdit;
+    txtYear: TEdit;
+    txtTerm: TEdit;
+    procedure txtAdmNoChange(Sender: TObject);
+    procedure btnPayClick(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPayment: TfrmPayment;
+
+implementation
+
+{$R *.dfm}
+uses uConn;
+procedure TfrmPayment.btnCancelClick(Sender: TObject);
+begin
+  frmPayment.Close;
+end;
+
+procedure TfrmPayment.btnPayClick(Sender: TObject);
+begin
+  FDQuerySave.SQL.Clear;
+  FDQuerySave.SQL.Add('INSERT INTO payment (adm_no, amount_paid, for_term, for_year) VALUES (:Adm, :Amt, :Trm, :Yr)');
+  FDQuerySave.ParamByName('Adm').Value := frmPayment.txtAdmNo.Text;
+  FDQuerySave.ParamByName('Amt').Value := frmPayment.txtPaid.Text;
+  FDQuerySave.ParamByName('Trm').Value := frmPayment.txtTerm.Text;
+  FDQuerySave.ParamByName('Yr').Value := frmPayment.txtYear.Text;
+  FDQuerySave.ExecSQL;
+  Application.MessageBox('Payment made successfully!','Kitchen System',MB_ICONINFORMATION);
+end;
+
+procedure TfrmPayment.txtAdmNoChange(Sender: TObject);
+var checkNull:Boolean;
+begin
+  FDQuerySelect.SQL.Clear;
+  FDQuerySelect.SQL.Add('SELECT  adm_no, full_name, current_class FROM passports_view' +
+          ' WHERE adm_no=:Adm');
+  FDQuerySelect.ParamByName('Adm').Value := txtAdmNo.Text;
+  FDQuerySelect.Open;
+  if (txtAdmNo.Text = '')then
+  begin
+    CheckNull := true;
+  end
+  else
+    CheckNull := false;
+
+  if (FDQuerySelect.RecordCount = 1) then
+        begin
+           txtName.Visible := true;
+           txtName.Caption := FDQuerySelect.FieldByName('full_name').Value + ', Class '+ FDQuerySelect.FieldByName('current_class').Value;
+           txtName.Font.Color := clBlue;
+        end;
+
+  if ((CheckNull = true) and (FDQuerySelect.RecordCount = 0)) then
+    begin
+              txtName.Visible := true;
+              txtName.Caption := 'Please input the Admission Number.';
+              txtName.Font.Color := clGreen;
+    end;
+
+   if ((CheckNull = false) and (FDQuerySelect.RecordCount = 0)) then
+        begin
+          if txtName.Visible = false then
+            begin
+                txtName.Visible := true;
+            end;
+            txtName.Caption := 'This Student Does Not Exist!!';
+            txtName.Font.Color := clRed;
+        end;
+end;
+
+end.

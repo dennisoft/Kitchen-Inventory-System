@@ -1,0 +1,52 @@
+unit uChange;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.Imaging.jpeg, Vcl.ExtCtrls, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
+
+type
+  TForm1 = class(TForm)
+    Label2: TLabel;
+    txtPass: TEdit;
+    Label3: TLabel;
+    txtRptPass: TEdit;
+    txtUser: TLabel;
+    txtAccount: TLabel;
+    FDQueryUser: TFDQuery;
+    Image2: TImage;
+    Label1: TLabel;
+    btnAdd: TBitBtn;
+    btnCancel: TBitBtn;
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+ FDQueryUser.SQL.Clear;
+    FDQueryUser.SQL.Add('SELECT * FROM auth' +
+        ' WHERE username=:User AND password=:Pass');
+    FDQueryUser.ParamByName('User').Value := frmLogin.txtUser.Text;
+    FDQueryUser.ParamByName('Pass').Value := frmLogin.txtPass.Text;
+    FDQueryUser.Open;
+    frmMenu.txtUser.Caption := 'Welcome, ' + FDQueryUser.FieldByName('fname').Value + ' ' + FDQueryUser.FieldByName('lname').Value;
+    frmMenu.txtAccount.Caption := FDQueryUser.FieldByName('account_type').Value + ' Account';
+end;
+
+end.

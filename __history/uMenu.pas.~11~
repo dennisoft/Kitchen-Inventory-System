@@ -1,0 +1,136 @@
+unit uMenu;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, MetropolisUI.Tile, Vcl.Ribbon,
+  Vcl.RibbonLunaStyleActnCtrls, Vcl.ToolWin, Vcl.ActnMan, Vcl.ActnCtrls,
+  Vcl.StdCtrls, Vcl.CategoryButtons, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
+  Vcl.Buttons, System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.Imaging.jpeg;
+
+type
+  TfrmMenu = class(TForm)
+    Image1: TImage;
+    CategoryButtons1: TCategoryButtons;
+    Label7: TLabel;
+    Label3: TLabel;
+    Label26: TLabel;
+    LinkLabel6: TLinkLabel;
+    LinkLabel1: TLinkLabel;
+    LinkLabel2: TLinkLabel;
+    LinkLabel3: TLinkLabel;
+    Label1: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label2: TLabel;
+    Label6: TLabel;
+    Label8: TLabel;
+    btnCancel: TBitBtn;
+    ActionManager1: TActionManager;
+    openRgStudents: TAction;
+    deleteStudent: TAction;
+    openPhoto: TAction;
+    openPayment: TAction;
+    openPayable: TAction;
+    txtUser: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    txtAccount: TLabel;
+    FDQueryUser: TFDQuery;
+    Image2: TImage;
+    addUser: TAction;
+    changeUser: TAction;
+    txtTime: TLabel;
+    txtDate: TLabel;
+    Timer1: TTimer;
+    Image5: TImage;
+    procedure btnCancelClick(Sender: TObject);
+    procedure openRgStudentsExecute(Sender: TObject);
+    procedure deleteStudentExecute(Sender: TObject);
+    procedure openPhotoExecute(Sender: TObject);
+    procedure openPaymentExecute(Sender: TObject);
+    procedure openPayableExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure addUserExecute(Sender: TObject);
+    procedure changeUserExecute(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmMenu: TfrmMenu;
+
+implementation
+
+{$R *.dfm}
+uses uConn, uLogin, uRegStudent, uDelete, uViewPassports, uMakePayment, uPayable, uAddUser, uChange;
+procedure TfrmMenu.openPhotoExecute(Sender: TObject);
+begin
+  frmPassports.ShowModal;
+end;
+
+procedure TfrmMenu.openRgStudentsExecute(Sender: TObject);
+begin
+  frmRegStudent.ShowModal;
+end;
+
+procedure TfrmMenu.Timer1Timer(Sender: TObject);
+begin
+  txtTime.Caption := TimetoStr(System.SysUtils.Time);
+  //frmInterface.txtTime.Repaint;
+  txtTime.Transparent := false;
+end;
+
+procedure TfrmMenu.deleteStudentExecute(Sender: TObject);
+begin
+  frmDelete.showModal;
+end;
+
+procedure TfrmMenu.FormShow(Sender: TObject);
+begin
+  FDQueryUser.SQL.Clear;
+    FDQueryUser.SQL.Add('SELECT * FROM auth' +
+        ' WHERE username=:User AND password=:Pass');
+    FDQueryUser.ParamByName('User').Value := frmLogin.txtUser.Text;
+    FDQueryUser.ParamByName('Pass').Value := frmLogin.txtPass.Text;
+    FDQueryUser.Open;
+    frmMenu.txtUser.Caption := 'Welcome, ' + FDQueryUser.FieldByName('fname').Value + ' ' + FDQueryUser.FieldByName('lname').Value;
+    frmMenu.txtAccount.Caption := FDQueryUser.FieldByName('account_type').Value + ' Account';
+
+    txtDate.Caption := FormatDateTime('dddd d of mmmm yyyy',System.SysUtils.Date);
+end;
+
+procedure TfrmMenu.openPayableExecute(Sender: TObject);
+begin
+  frmPayable.showModal;
+end;
+
+procedure TfrmMenu.openPaymentExecute(Sender: TObject);
+begin
+  frmPayment.showModal;
+end;
+
+procedure TfrmMenu.addUserExecute(Sender: TObject);
+begin
+  frmAddUser.ShowModal;
+end;
+
+procedure TfrmMenu.btnCancelClick(Sender: TObject);
+begin
+  Application.Terminate;
+end;
+
+procedure TfrmMenu.changeUserExecute(Sender: TObject);
+begin
+  frmChanges.showModal;
+end;
+
+end.

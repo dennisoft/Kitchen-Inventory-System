@@ -1,0 +1,1 @@
+SELECT  admission_number, full_name, current_class, current_stream, photo FROM passports_view

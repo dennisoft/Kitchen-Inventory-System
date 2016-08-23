@@ -1,0 +1,62 @@
+program kitchenSystem;
+
+uses
+  Vcl.Forms,
+  Main in 'Main.pas' {frmWelcome},
+  uLogin in 'uLogin.pas' {frmLogin},
+  Vcl.Themes,
+  Vcl.Styles,
+  uConn in 'uConn.pas' {ConnSQL: TDataModule},
+  uMenu in 'uMenu.pas' {frmMenu},
+  uRegStudent in 'uRegStudent.pas' {frmRegStudent},
+  uDelete in 'uDelete.pas' {frmDelete},
+  uViewPassports in 'uViewPassports.pas' {frmPassports},
+  uMakePayment in 'uMakePayment.pas' {frmPayment},
+  uPayable in 'uPayable.pas' {frmPayable},
+  uAddUser in 'uAddUser.pas' {frmAddUser},
+  uChange in 'uChange.pas' {frmChanges},
+  uAddProduct in 'uAddProduct.pas' {frmAddProduct},
+  uAddDelivery in 'uAddDelivery.pas' {frmAddDelivery},
+  uReports in 'uReports.pas' {frmReports},
+  uClassList in 'uClassList.pas' {frmClassList},
+  uPaymentReport in 'uPaymentReport.pas' {frmPayments},
+  uTotal in 'uTotal.pas' {frmTotal},
+  uMove in 'uMove.pas' {frmMove},
+  uUpdateStock in 'uUpdateStock.pas' {frmUpdate},
+  uDeductions in 'uDeductions.pas' {frmDeduct},
+  uExpenses in 'uExpenses.pas' {frmExpenses},
+  uIncome in 'uIncome.pas' {frmIncome},
+  uBusExpenses in 'uBusExpenses.pas' {frmBusExpenses},
+  uBusHire in 'uBusHire.pas' {frmBusHire};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := false;
+  Application.CreateForm(TfrmWelcome, frmWelcome);
+  Application.CreateForm(TfrmLogin, frmLogin);
+  Application.CreateForm(TConnSQL, ConnSQL);
+  Application.CreateForm(TfrmMenu, frmMenu);
+  Application.CreateForm(TfrmRegStudent, frmRegStudent);
+  Application.CreateForm(TfrmDelete, frmDelete);
+  Application.CreateForm(TfrmPassports, frmPassports);
+  Application.CreateForm(TfrmPayment, frmPayment);
+  Application.CreateForm(TfrmPayable, frmPayable);
+  Application.CreateForm(TfrmAddUser, frmAddUser);
+  Application.CreateForm(TfrmChanges, frmChanges);
+  Application.CreateForm(TfrmAddProduct, frmAddProduct);
+  Application.CreateForm(TfrmAddDelivery, frmAddDelivery);
+  Application.CreateForm(TfrmReports, frmReports);
+  Application.CreateForm(TfrmClassList, frmClassList);
+  Application.CreateForm(TfrmPayments, frmPayments);
+  Application.CreateForm(TfrmTotal, frmTotal);
+  Application.CreateForm(TfrmMove, frmMove);
+  Application.CreateForm(TfrmUpdate, frmUpdate);
+  Application.CreateForm(TfrmDeduct, frmDeduct);
+  Application.CreateForm(TfrmExpenses, frmExpenses);
+  Application.CreateForm(TfrmIncome, frmIncome);
+  Application.CreateForm(TfrmBusExpenses, frmBusExpenses);
+  Application.CreateForm(TfrmBusHire, frmBusHire);
+  Application.Run;
+end.

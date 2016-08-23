@@ -1,0 +1,417 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 505
+  ClientWidth = 752
+  Color = clWhite
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lblUser: TLabel
+    Left = 52
+    Top = 118
+    Width = 146
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Admission Number:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 110
+    Top = 173
+    Width = 88
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'First Name:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label1: TLabel
+    Left = 124
+    Top = 146
+    Width = 74
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Surname:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 111
+    Top = 202
+    Width = 87
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Last Name:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 97
+    Top = 255
+    Width = 101
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Date of Birth:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 137
+    Top = 228
+    Width = 61
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Gender:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label11: TLabel
+    Left = 82
+    Top = 286
+    Width = 116
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Term Admitted:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label10: TLabel
+    Left = 90
+    Top = 313
+    Width = 108
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Current Form:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label6: TLabel
+    Left = 59
+    Top = 335
+    Width = 139
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Form admitted to:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label12: TLabel
+    Left = 102
+    Top = 364
+    Width = 96
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'KCPE Marks:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label13: TLabel
+    Left = 144
+    Top = 391
+    Width = 54
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'House:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object imgPassport: TImage
+    Left = 452
+    Top = 131
+    Width = 228
+    Height = 211
+    Hint = 'Photo of the Student'
+    Stretch = True
+  end
+  object txtAdmNo: TEdit
+    Left = 197
+    Top = 117
+    Width = 142
+    Height = 21
+    Hint = 'Type your Username here'
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    MaxLength = 4
+    NumbersOnly = True
+    ParentFont = False
+    TabOrder = 0
+    TextHint = 'Admission Number'
+  end
+  object txtFirstName: TEdit
+    Left = 197
+    Top = 172
+    Width = 142
+    Height = 21
+    Hint = 'Type your Username here'
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    TextHint = 'First Name'
+  end
+  object txtSurname: TEdit
+    Left = 197
+    Top = 145
+    Width = 142
+    Height = 21
+    Hint = 'Type your Username here'
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    TextHint = 'Surname'
+  end
+  object txtLastName: TEdit
+    Left = 197
+    Top = 201
+    Width = 142
+    Height = 21
+    Hint = 'Type your Username here'
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+    TextHint = 'Last Name'
+  end
+  object txtGender: TComboBoxEx
+    Left = 197
+    Top = 228
+    Width = 142
+    Height = 22
+    Hint = 'Male/Female'
+    AutoCompleteOptions = [acoAutoSuggest, acoAutoAppend]
+    ItemsEx = <
+      item
+        Caption = 'Male'
+      end
+      item
+        Caption = 'Female'
+      end>
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 4
+  end
+  object txtDOB: TDateTimePicker
+    Left = 197
+    Top = 256
+    Width = 142
+    Height = 21
+    Date = 36525.000000000000000000
+    Time = 36525.000000000000000000
+    Color = cl3DLight
+    TabOrder = 5
+  end
+  object txtTermAdm: TEdit
+    Left = 197
+    Top = 283
+    Width = 142
+    Height = 21
+    Hint = 'Type your Username here'
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 6
+    TextHint = 'Admission Term'
+  end
+  object txtCurrentForm: TEdit
+    Left = 197
+    Top = 310
+    Width = 142
+    Height = 21
+    Hint = 'Type your Username here'
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 7
+    TextHint = 'Current Form'
+  end
+  object txtAdmForm: TEdit
+    Left = 197
+    Top = 337
+    Width = 142
+    Height = 21
+    Hint = 'Type your Username here'
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 8
+    TextHint = 'Admission Form'
+  end
+  object txtKCPE: TEdit
+    Left = 197
+    Top = 363
+    Width = 142
+    Height = 21
+    Hint = 'Type your Username here'
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 9
+    TextHint = 'KCPE'
+  end
+  object txtHouse: TEdit
+    Left = 197
+    Top = 390
+    Width = 142
+    Height = 21
+    Hint = 'Type your Username here'
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 10
+    TextHint = 'House'
+  end
+  object btnOpenPassport: TBitBtn
+    Left = 493
+    Top = 348
+    Width = 147
+    Height = 25
+    Caption = 'Open Student Photo'
+    TabOrder = 11
+  end
+  object btnSave: TBitBtn
+    Left = 583
+    Top = 379
+    Width = 113
+    Height = 36
+    Caption = 'Save'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 12
+  end
+  object btnClear: TBitBtn
+    Left = 452
+    Top = 379
+    Width = 109
+    Height = 35
+    Caption = 'Clear'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 13
+  end
+end

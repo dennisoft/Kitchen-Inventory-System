@@ -1,0 +1,257 @@
+object frmChanges: TfrmChanges
+  Left = 0
+  Top = 0
+  Caption = 'Change Password'
+  ClientHeight = 237
+  ClientWidth = 485
+  Color = clWhite
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnShow = FormShow
+  DesignSize = (
+    485
+    237)
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label2: TLabel
+    Left = 39
+    Top = 122
+    Width = 191
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Choose a new Password:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 94
+    Top = 149
+    Width = 136
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Repeat Password:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object txtUser: TLabel
+    Left = 288
+    Top = 26
+    Width = 128
+    Height = 16
+    Anchors = []
+    Caption = 'Welcome'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Verdana'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txtAccount: TLabel
+    Left = 288
+    Top = 48
+    Width = 128
+    Height = 17
+    Anchors = []
+    Caption = 'Testing'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Verdana'
+    Font.Style = [fsItalic]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Image2: TImage
+    Left = 250
+    Top = 28
+    Width = 35
+    Height = 38
+    Picture.Data = {
+      0A544A504547496D616765E1030000FFD8FFE000104A46494600010101004800
+      480000FFDB0043000403030403030404030405040405060A07060606060D090A
+      080A0F0D10100F0D0F0E11131814111217120E0F151C151719191B1B1B10141D
+      1F1D1A1F181A1B1AFFDB0043010405050605060C07070C1A110F111A1A1A1A1A
+      1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A1A
+      1A1A1A1A1A1A1A1A1A1A1A1A1AFFC0001108002B002003012200021101031101
+      FFC4001F0000010501010101010100000000000000000102030405060708090A
+      0BFFC400B5100002010303020403050504040000017D01020300041105122131
+      410613516107227114328191A1082342B1C11552D1F02433627282090A161718
+      191A25262728292A3435363738393A434445464748494A535455565758595A63
+      6465666768696A737475767778797A838485868788898A92939495969798999A
+      A2A3A4A5A6A7A8A9AAB2B3B4B5B6B7B8B9BAC2C3C4C5C6C7C8C9CAD2D3D4D5D6
+      D7D8D9DAE1E2E3E4E5E6E7E8E9EAF1F2F3F4F5F6F7F8F9FAFFC4001F01000301
+      01010101010101010000000000000102030405060708090A0BFFC400B5110002
+      0102040403040705040400010277000102031104052131061241510761711322
+      328108144291A1B1C109233352F0156272D10A162434E125F11718191A262728
+      292A35363738393A434445464748494A535455565758595A636465666768696A
+      737475767778797A82838485868788898A92939495969798999AA2A3A4A5A6A7
+      A8A9AAB2B3B4B5B6B7B8B9BAC2C3C4C5C6C7C8C9CAD2D3D4D5D6D7D8D9DAE2E3
+      E4E5E6E7E8E9EAF2F3F4F5F6F7F8F9FAFFDA000C03010002110311003F00F25B
+      4881C715B76F681973827F0AE7AD6E40C73C57B07C31F01E83E2AD2AF750F12E
+      8F14CCD37956F3895D6460A304F0460678E3D335F43168F2DA3829AD5429358D
+      771019AF54F881F0D2DFC2FA6BEAFE19BABA7B38587DAACEE6532854271BD18F
+      20827919C119AF25BAB9073CD0DA124CE660D4002371E3BD7D4DF0E6EE0B6F07
+      6970DB4BE6858CEF6CE72E4E49FD6BE429668E050D338404E064F53E83D6BDC7
+      E027FC249797A6D06957234120B35DDC218829EC10372D9FA715CBCCD1D1CA7A
+      F78A6F609FC39AA4376DB6296D9D09CE39238FD715F25DC5F80CCA1F7E0E377A
+      FBD7B6FC7C8BC4BA7C515B69FA5DC4FA248999AEAD94C8CADDD5907207BF3F85
+      7CED14F1CDB846E18A9C32F42A7DC1E451CCD8729D3783B5FB2F0CEA6750BCB1
+      37F3221485485DA99C65B9EFC62BD62C3F690360004D119B1D3328AF05A290CF
+      7FBDFDA59AF410DA1B2E7D2515E59E38F15D978BEEA0BC874F363771A94761B7
+      1229208CE39C83D3EA6B93A2803FFFD9}
+  end
+  object Label1: TLabel
+    Left = 33
+    Top = 26
+    Width = 210
+    Height = 40
+    Alignment = taRightJustify
+    Anchors = []
+    Caption = 'User Settings'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -27
+    Font.Name = 'Verdana'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 122
+    Top = 95
+    Width = 108
+    Height = 18
+    Alignment = taRightJustify
+    Caption = 'Old Password:'
+    Color = clHotLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+  end
+  object txtPass: TEdit
+    Left = 236
+    Top = 121
+    Width = 142
+    Height = 21
+    Hint = 'Input your Password here'
+    BevelInner = bvNone
+    BevelOuter = bvNone
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    PasswordChar = '*'
+    TabOrder = 0
+    TextHint = 'Choose a strong password'
+  end
+  object txtRptPass: TEdit
+    Left = 236
+    Top = 148
+    Width = 142
+    Height = 21
+    Hint = 'Input your Password here'
+    BevelInner = bvNone
+    BevelOuter = bvNone
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    PasswordChar = '*'
+    TabOrder = 1
+    TextHint = 'Repeat the password'
+  end
+  object btnAdd: TBitBtn
+    Left = 48
+    Top = 191
+    Width = 165
+    Height = 38
+    Caption = 'Make Changes'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 2
+    OnClick = btnAddClick
+  end
+  object btnCancel: TBitBtn
+    Left = 288
+    Top = 191
+    Width = 165
+    Height = 38
+    Caption = 'Cancel'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 3
+  end
+  object txtOldPass: TEdit
+    Left = 236
+    Top = 94
+    Width = 142
+    Height = 21
+    Hint = 'Input your Password here'
+    BevelInner = bvNone
+    BevelOuter = bvNone
+    Color = cl3DLight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    PasswordChar = '*'
+    TabOrder = 4
+    TextHint = 'Repeat the password'
+  end
+  object FDQueryUser: TFDQuery
+    Connection = ConnSQL.FDConnection1
+    Left = 376
+    Top = 80
+  end
+  object FDQuerySave: TFDQuery
+    Connection = ConnSQL.FDConnection1
+    Left = 432
+    Top = 64
+  end
+  object FDQueryCompare: TFDQuery
+    Connection = ConnSQL.FDConnection1
+    Left = 432
+    Top = 120
+  end
+end

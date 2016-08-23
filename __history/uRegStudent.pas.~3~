@@ -1,0 +1,83 @@
+unit uRegStudent;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  Vcl.ComCtrls, Vcl.Imaging.pngimage, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.ExtDlgs;
+
+type
+  TfrmRegStudent = class(TForm)
+    lblUser: TLabel;
+    Label9: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    txtAdmNo: TEdit;
+    txtFirstName: TEdit;
+    txtSurname: TEdit;
+    txtLastName: TEdit;
+    txtGender: TComboBoxEx;
+    txtDOB: TDateTimePicker;
+    txtTermAdm: TEdit;
+    txtCurrentForm: TEdit;
+    Label11: TLabel;
+    Label10: TLabel;
+    txtAdmForm: TEdit;
+    Label6: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    txtKCPE: TEdit;
+    txtHouse: TEdit;
+    imgPassport: TImage;
+    btnOpenPassport: TBitBtn;
+    btnSave: TBitBtn;
+    btnClear: TBitBtn;
+    Image2: TImage;
+    Image6: TImage;
+    Image1: TImage;
+    Image3: TImage;
+    Image5: TImage;
+    OpenPictureDialog: TOpenPictureDialog;
+    FDQueryPhoto: TFDQuery;
+    procedure btnOpenPassportClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRegStudent: TfrmRegStudent;
+
+implementation
+
+{$R *.dfm}
+uses uConn;
+procedure TfrmRegStudent.btnOpenPassportClick(Sender: TObject);
+begin
+  FDQueryPhoto.SQL.Clear;
+  FDQueryPhoto.SQL.Add('SELECT path FROM passports_folder_path_table');
+  FDQueryPhoto.Open;
+
+  OpenPictureDialog.InitialDir := FDQueryPhoto.FieldByName('path').Value;
+  OpenPictureDialog.FileName := FDQueryPhoto.FieldByName('path').Value +'none.jpg';
+
+ if openPictureDialog.FileName = '' then
+  begin
+    openpicturedialog.Execute();
+  end
+ else
+  begin
+    openpicturedialog.DestroyComponents;
+    openpicturedialog.Execute();
+  end;
+    imgPassport.Picture.LoadFromFile(openpicturedialog.FileName);
+end;
+
+end.

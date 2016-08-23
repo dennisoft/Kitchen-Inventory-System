@@ -1,0 +1,36 @@
+program kitchenSystem;
+
+uses
+  Vcl.Forms,
+  Main in 'Main.pas' {frmWelcome},
+  uLogin in 'uLogin.pas' {frmLogin},
+  Vcl.Themes,
+  Vcl.Styles,
+  uConn in 'uConn.pas' {ConnSQL: TDataModule},
+  uMenu in 'uMenu.pas' {frmMenu},
+  uRegStudent in 'uRegStudent.pas' {frmRegStudent},
+  uDelete in 'uDelete.pas' {frmDelete},
+  uViewPassports in 'uViewPassports.pas' {frmPassports},
+  uMakePayment in 'uMakePayment.pas' {frmPayment},
+  uPayable in 'uPayable.pas' {frmPayable},
+  uAddUser in 'uAddUser.pas' {frmAddUser},
+  uChange in 'uChange.pas' {frmChanges};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmWelcome, frmWelcome);
+  Application.CreateForm(TfrmLogin, frmLogin);
+  Application.CreateForm(TConnSQL, ConnSQL);
+  Application.CreateForm(TfrmMenu, frmMenu);
+  Application.CreateForm(TfrmRegStudent, frmRegStudent);
+  Application.CreateForm(TfrmDelete, frmDelete);
+  Application.CreateForm(TfrmPassports, frmPassports);
+  Application.CreateForm(TfrmPayment, frmPayment);
+  Application.CreateForm(TfrmPayable, frmPayable);
+  Application.CreateForm(TfrmAddUser, frmAddUser);
+  Application.CreateForm(TfrmChanges, frmChanges);
+  Application.Run;
+end.

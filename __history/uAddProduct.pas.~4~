@@ -1,0 +1,85 @@
+unit uAddProduct;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.ComCtrls,
+  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Vcl.Imaging.jpeg;
+
+type
+  TfrmAddProduct = class(TForm)
+    Label5: TLabel;
+    Label6: TLabel;
+    DBGridProduct: TDBGrid;
+    btnAdd: TBitBtn;
+    btnCancel: TBitBtn;
+    txtID: TEdit;
+    FDQueryShow: TFDQuery;
+    DataSource1: TDataSource;
+    txtName: TEdit;
+    Label4: TLabel;
+    LinkLabel6: TLinkLabel;
+    LinkLabel2: TLinkLabel;
+    Image1: TImage;
+    procedure FormShow(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+    procedure btnAddClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmAddProduct: TfrmAddProduct;
+
+implementation
+
+{$R *.dfm}
+uses uConn;
+procedure TfrmAddProduct.btnAddClick(Sender: TObject);
+begin
+  if (txtID.Text = '') then
+    begin
+      Application.MessageBox('Please input the Product ID','Kitchen Information System',MB_ICONERROR);
+    end
+    else
+      if (txtName.Text = '') then
+        begin
+          Application.MessageBox('Please input the Product Name','Kitchen Information System',MB_ICONERROR);
+        end
+        else
+          begin
+            FDQueryShow.SQL.Clear;
+            FDQueryShow.SQL.Add('INSERT into stock_products (product_id, product_name) Values (:ID, :NME)');
+            FDQueryShow.ParamByName('ID').Value := txtID.Text;
+            FDQueryShow.ParamByName('NME').Value := txtName.Text;
+            FDQueryShow.ExecSQL;
+            Application.MessageBox('Product Added successfully!','Kitchen System',MB_ICONINFORMATION);
+            FormShow(Sender);
+          end;
+end;
+
+procedure TfrmAddProduct.btnCancelClick(Sender: TObject);
+begin
+  frmAddProduct.Close;
+end;
+
+procedure TfrmAddProduct.FormShow(Sender: TObject);
+begin
+   FDQueryShow.SQL.Clear;
+   FDQueryShow.SQL.Add('Select * from stock_products');
+   FDQueryShow.Open;
+   FDQueryShow.Active := true;
+
+   DBGridProduct.Columns[0].FieldName := 'product_id';
+   DBGridProduct.Columns[1].FieldName := 'product_name';
+   DBGridProduct.DataSource := DataSource1;
+   ShowScrollBar(DBGridProduct.Handle,SB_VERT,FALSE);
+end;
+
+end.

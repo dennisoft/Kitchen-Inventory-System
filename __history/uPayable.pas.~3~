@@ -1,0 +1,78 @@
+unit uPayable;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.Imaging.jpeg, Vcl.ExtCtrls;
+
+type
+  TfrmPayable = class(TForm)
+    DBGridPayable: TDBGrid;
+    FDQueryShow: TFDQuery;
+    DataSource1: TDataSource;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    txtPayable: TEdit;
+    txtYear: TEdit;
+    txtTerm: TEdit;
+    btnAdd: TBitBtn;
+    btnCancel: TBitBtn;
+    FDQuerySave: TFDQuery;
+    LinkLabel6: TLinkLabel;
+    Label4: TLabel;
+    LinkLabel1: TLinkLabel;
+    Image1: TImage;
+    procedure FormShow(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+    procedure btnAddClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPayable: TfrmPayable;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmPayable.btnAddClick(Sender: TObject);
+begin
+  FDQuerySave.SQL.Clear;
+  FDQuerySave.SQL.Add('INSERT INTO payable (term, year, amount_payable) VALUES (:Trm, :Yr, :Amt)');
+  FDQuerySave.ParamByName('Amt').Value := frmPayable.txtPayable.Text;
+  FDQuerySave.ParamByName('Trm').Value := txtTerm.Text;
+  FDQuerySave.ParamByName('Yr').Value := txtYear.Text;
+  FDQuerySave.ExecSQL;
+  Application.MessageBox('Record added successfully!','Kitchen System',MB_ICONINFORMATION);
+  FormShow(Sender);
+end;
+
+procedure TfrmPayable.btnCancelClick(Sender: TObject);
+begin
+  frmPayable.Close;
+end;
+
+procedure TfrmPayable.FormShow(Sender: TObject);
+begin
+   FDQueryShow.SQL.Clear;
+   FDQueryShow.SQL.Add('Select * from payable');
+   FDQueryShow.Open;
+   FDQueryShow.Active := true;
+
+   DBGridPayable.Columns[0].FieldName := 'term';
+   DBGridPayable.Columns[1].FieldName := 'year';
+   DBGridPayable.Columns[2].FieldName := 'amount_payable';
+   DBGridPayable.DataSource := DataSource1;
+   ShowScrollBar(DBGridPayable.Handle,SB_VERT,FALSE);
+end;
+
+end.

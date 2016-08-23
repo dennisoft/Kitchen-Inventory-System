@@ -1,0 +1,169 @@
+unit uMakePayment;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Imaging.pngimage, Vcl.Imaging.jpeg, Vcl.ExtCtrls, Vcl.Imaging.GIFImg;
+
+type
+  TfrmPayment = class(TForm)
+    txtNamee: TLabel;
+    FDQuerySelect: TFDQuery;
+    btnPay: TBitBtn;
+    btnCancel: TBitBtn;
+    FDQuerySave: TFDQuery;
+    Image1: TImage;
+    Label4: TLabel;
+    Image5: TImage;
+    txtAdm: TEdit;
+    Label5: TLabel;
+    txtAmt: TEdit;
+    Label2: TLabel;
+    FDQueryChange: TFDQuery;
+    txtBala: TLabel;
+    FDQueryBal: TFDQuery;
+    procedure txtAdmNoChange(Sender: TObject);
+    procedure btnPayClick(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+    procedure txtAdmChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPayment: TfrmPayment;
+
+implementation
+
+{$R *.dfm}
+uses uConn, uMenu;
+procedure TfrmPayment.btnCancelClick(Sender: TObject);
+begin
+  frmPayment.Close;
+end;
+
+procedure TfrmPayment.btnPayClick(Sender: TObject);
+begin
+  FDQuerySave.SQL.Clear;
+  FDQuerySave.SQL.Add('INSERT INTO payment (adm_no, amount_paid, for_term, for_year) VALUES (:Adm, :Amt, :Trm, :Yr)');
+  //FDQuerySave.ParamByName('Adm').Value := frmPayment.txtAdmNo.Text;
+  //FDQuerySave.ParamByName('Amt').Value := frmPayment.txtPaid.Text;
+  //FDQuerySave.ParamByName('Trm').Value := frmPayment.txtTerm.Text;
+  //FDQuerySave.ParamByName('Yr').Value := frmPayment.txtYear.Text;
+  FDQuerySave.ExecSQL;
+  Application.MessageBox('Payment made successfully!','Kitchen System',MB_ICONINFORMATION);
+end;
+
+
+procedure TfrmPayment.txtAdmChange(Sender: TObject);
+begin
+  FDQueryChange.SQL.Clear;
+  FDqueryChange.SQL.Add('SELECT adm_no, current_term, current_class, current_year, fname, lname, sname FROM register WHERE adm_no =:ADM');
+  FDQueryChange.ParamByName('ADM').Text := txtAdm.Text;
+  FDQueryChange.Open;
+
+  if (FDQueryChange.RowsAffected = 1) then
+  begin
+    txtNamee.Caption := FDQueryChange.FieldByName('sname').Text+' '+FDQueryChange.FieldByName('fname').Text+' '+FDQueryChange.FieldByName('lname').Text+' Class '+FDQueryChange.FieldByName('current_class').Text+' Term '+FDQueryChange.FieldByName('current_term').Text+', '+FDQueryChange.FieldByName('current_year').Text;
+    txtNamee.Font.Color := clGreen;
+  end
+  else
+    begin
+      txtNamee.Caption := 'This Student does not Exist!';
+      txtNamee.Font.Color := clRed;
+    end;
+
+    FDQueryBal.SQL.Clear;
+    FDqueryBal.SQL.Add('SELECT bal FROM balance WHERE adm_no =:AAA');
+    FDQueryBal.ParamByName('AAA').Text := txtAdm.Text;
+    FDQueryBal.Open;
+
+
+    if (FDQueryBal.FieldByName('bal').Value > 0) then
+      begin
+        txtBala.Caption := 'Balance of Kshs.'+FDQueryBal.FieldByName('bal').Text;
+        txtBala.Font.Color := clRed;
+      end
+      else
+      begin
+          txtBala.Caption := 'No Balance';
+          txtBala.Font.Color := clGreen;
+      end;
+end;
+
+procedure TfrmPayment.txtAdmNoChange(Sender: TObject);
+var checkNull:Boolean;
+begin
+  FDQuerySelect.SQL.Clear;
+  FDQuerySelect.SQL.Add('SELECT  adm_no, full_name, current_class FROM passports_view' +
+          ' WHERE adm_no=:Adm');
+  if (frmMenu.txtAdmSearch.Text = '') then
+  begin
+    //FDQuerySelect.ParamByName('Adm').Value := txtAdm.Text;
+    txtNamee.Caption := 'Please input the Admission Number to get balance information.';
+    txtNamee.Font.Color := clGreen;
+  end
+  else
+    begin
+      //if you search
+      FDQuerySelect.ParamByName('Adm').Value := frmMenu.FDQuerySearch.FieldByName('adm_no').Text;
+      FDQuerySelect.Open;
+    end;
+
+  if (txtAdm.Text = '')then
+  begin
+    CheckNull := true;
+  end
+  else
+    CheckNull := false;
+
+  if (FDQuerySelect.RecordCount = 1) then
+        begin
+           txtNamee.Visible := true;
+           txtNamee.Caption := FDQuerySelect.FieldByName('full_name').Value + ', Class '+ FDQuerySelect.FieldByName('current_class').Value;
+           txtNamee.Font.Color := clBlue;
+        end;
+
+  if ((CheckNull = true) and (FDQuerySelect.RecordCount = 0)) then
+    begin
+              txtNamee.Visible := true;
+              txtNamee.Caption := 'Please input the Admission Number to get balance information.';
+              txtNamee.Font.Color := clGreen;
+    end;
+
+   if ((CheckNull = false) and (FDQuerySelect.RecordCount = 0)) then
+        begin
+          if txtNamee.Visible = false then
+            begin
+                txtNamee.Visible := true;
+            end;
+            txtNamee.Caption := 'This Student Does Not Exist!!';
+            txtNamee.Font.Color := clRed;
+        end;
+
+  FDQueryBal.SQL.Clear;
+  FDqueryBal.SQL.Add('SELECT bal FROM balance WHERE adm_no =:AAA');
+  FDQueryBal.ParamByName('AAA').Text := txtAdm.Text;
+  FDQueryBal.Open;
+
+
+  if (FDQueryBal.FieldByName('bal').Value > 0) then
+    begin
+      txtBala.Caption := 'Balance of Kshs.'+FDQueryBal.FieldByName('bal').Text;
+      txtBala.Font.Color := clRed;
+    end
+    else
+    begin
+        txtBala.Caption := 'No Balance';
+        txtBala.Font.Color := clGreen;
+    end;
+end;
+
+end.

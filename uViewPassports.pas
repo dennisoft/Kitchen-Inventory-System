@@ -1,0 +1,260 @@
+unit uViewPassports;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  Vcl.ExtDlgs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.UI.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Phys, Data.DB,
+  FireDAC.Comp.Client, FireDAC.Comp.DataSet, Vcl.Imaging.pngimage, Vcl.Imaging.JPEG;
+
+type
+  TfrmPassports = class(TForm)
+    imgPassportView: TImage;
+    btnOpenNewPassport: TBitBtn;
+    btnSave: TBitBtn;
+    lblUser: TLabel;
+    txtAdmNo: TEdit;
+    btnLoadCurrentPassport: TBitBtn;
+    OpenNewPictureDialog: TOpenPictureDialog;
+    FDQuerySelect: TFDQuery;
+    txtName: TLabel;
+    FDQueryLoad: TFDQuery;
+    FDQuerySavePhotoNew: TFDQuery;
+    FDQueryPhoto: TFDQuery;
+    Image2: TImage;
+    Image3: TImage;
+    FDQuery2: TFDQuery;
+    FDTable1: TFDTable;
+    FDQuery3: TFDQuery;
+    FDQuery4: TFDQuery;
+    FDTable2: TFDTable;
+    procedure btnOpenNewPassportClick(Sender: TObject);
+    procedure btnLoadCurrentPassportClick(Sender: TObject);
+    procedure btnLoadCurrentStudentDetails(Sender: TObject);
+    procedure loadInitial(Sender: TObject);
+    procedure btnSaveClick(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPassports: TfrmPassports;
+
+implementation
+
+{$R *.dfm}
+uses UConn;
+procedure TfrmPassports.btnLoadCurrentPassportClick(Sender: TObject);
+var BS: TStream;
+vGraphic: TGraphic;
+var CheckNull: Boolean;
+var NullPhoto: Boolean;
+var NoRecord: Boolean;
+begin
+  FDQueryLoad.SQL.Clear;
+  FDQueryLoad.SQL.Add('SELECT  photo FROM register' +
+          ' WHERE adm_no=:Adm');
+  FDQueryLoad.ParamByName('Adm').Value := frmPassports.txtAdmNo.Text;
+  FDQueryLoad.Open;
+
+  FDQuery3.SQL.Clear;
+  FDQuery3.SQL.Add('DROP TABLE IF EXISTS temppview');
+  FDQuery3.ExecSQL;
+  FDQuery3.SQL.Clear;
+  FDQuery3.SQL.Add('CREATE TABLE `temppview` (`image` LONGBLOB)');
+  FDQuery3.ExecSQL;
+
+  FDQuery4.SQL.Clear;
+  FDQuery4.SQL.Add('INSERT INTO temppview (SELECT photo FROM passports_view WHERE adm_no=:Adm)');
+  FDQuery4.ParamByName('Adm').Value := frmPassports.txtAdmNo.Text;
+  FDQuery4.ExecSQL;
+
+  FDTable2.TableName := 'kitchen.temppview';
+  FDTable2.Active := true;
+
+
+  FDQueryPhoto.SQL.Clear;
+  FDQueryPhoto.SQL.Add('SELECT path FROM passports_folder_path_table');
+  FDQueryPhoto.Open;
+
+  OpenNewPictureDialog.InitialDir := FDQueryPhoto.FieldByName('path').Value;
+  OpenNewPictureDialog.FileName := FDQueryPhoto.FieldByName('path').Value +'none.jpg';
+
+  if (frmPassports.txtAdmNo.Text = '')then
+  begin
+    CheckNull := true;
+  end
+  else
+    CheckNull := false;
+
+  if FDQueryLoad.RecordCount = 0 then
+    begin
+      NoRecord := true;
+    end
+  else
+    NoRecord := false;
+
+  if FDQueryLoad.FieldByName('photo').IsNull then
+    begin
+      NullPhoto := true
+    end
+  else
+    begin
+      NullPhoto := false;
+    end;
+
+  if NullPhoto = false then
+    begin
+      btnOpenNewPassport.Enabled := true;
+      btnSave.Enabled := true;
+      imgPassportView.Picture.Graphic := nil;
+      BS := FDTable2.CreateBlobStream(FDTable2.FieldByName('image'),bmRead);
+      try
+        vGraphic := TJPEGImage.Create;
+        try
+          vGraphic.LoadFromStream(BS);
+          imgPassportView.Picture.Graphic := vGraphic;
+        finally
+          vGraphic.Free;
+        end;
+      finally
+          BS.Free;
+          FDTable2.Active:= false;
+      end;
+    end;
+
+  if ((NullPhoto = true) and (NoRecord = false)) then
+    begin
+      showMessage('This Student does not have a Passport.');
+      btnOpenNewPassport.Enabled := true;
+      btnSave.Enabled := true;
+      imgPassportView.Picture.Graphic := nil;
+      frmPassports.imgPassportView.Picture.LoadFromFile(FDQueryPhoto.FieldByName('path').Value +'none.jpg');
+    end;
+
+  if ((NoRecord = true) and (CheckNull = true)) then
+    begin
+      btnOpenNewPassport.Enabled := false;
+      btnSave.Enabled := false;
+      showMessage('Admission Number Required!');
+      txtAdmNo.SetFocus;
+    end;
+
+  if ((NoRecord = true) and (CheckNull = false)) then
+    begin
+      btnOpenNewPassport.Enabled := false;
+      btnSave.Enabled := false;
+      showMessage('This Student does not Exist!!');
+      txtAdmNo.SetFocus;
+    end;
+
+end;
+
+procedure TfrmPassports.btnLoadCurrentStudentDetails(Sender: TObject);
+var checkNull:Boolean;
+begin
+  FDQuerySelect.SQL.Clear;
+  FDQuerySelect.SQL.Add('SELECT  adm_no, full_name, current_class FROM passports_view' +
+          ' WHERE adm_no=:Adm');
+  FDQuerySelect.ParamByName('Adm').Value := frmPassports.txtAdmNo.Text;
+  FDQuerySelect.Open;
+  if (frmPassports.txtAdmNo.Text = '')then
+  begin
+    CheckNull := true;
+  end
+  else
+    CheckNull := false;
+
+  if (FDQuerySelect.RecordCount = 1) then
+        begin
+           frmPassports.txtName.Visible := true;
+           frmPassports.txtName.Caption := FDQuerySelect.FieldByName('full_name').Value + ', Class '+ FDQuerySelect.FieldByName('current_class').Value;
+           frmPassports.txtName.Font.Color := clBlack;
+           btnOpenNewPassport.Enabled := true;
+           btnSave.Enabled := true;
+           frmPassports.btnLoadCurrentPassportClick(Sender);
+        end;
+
+  if ((CheckNull = true) and (FDQuerySelect.RecordCount = 0)) then
+    begin
+              frmPassports.txtName.Visible := true;
+              frmPassports.txtName.Caption := 'Please input the Admission Number.';
+              frmPassports.txtName.Font.Color := clGreen;
+              btnOpenNewPassport.Enabled := false;
+              btnSave.Enabled := false;
+              frmPassports.loadInitial(Sender);
+    end;
+
+   if ((CheckNull = false) and (FDQuerySelect.RecordCount = 0)) then
+        begin
+          if frmPassports.txtName.Visible = false then
+            begin
+                frmPassports.txtName.Visible := true;
+            end;
+            frmPassports.txtName.Caption := 'This Student Does Not Exist!!';
+            frmPassports.txtName.Font.Color := clRed;
+            btnOpenNewPassport.Enabled := false;
+            btnSave.Enabled := false;
+            frmPassports.loadInitial(Sender);
+        end;
+end;
+
+procedure TfrmPassports.btnOpenNewPassportClick(Sender: TObject);
+begin
+  openNewPictureDialog.Execute();
+  imgPassportView.Picture.LoadFromFile(openNewPictureDialog.FileName);
+end;
+
+procedure TfrmPassports.btnSaveClick(Sender: TObject);
+var AStream : TMemoryStream;
+begin
+  FDQuery2.SQL.Clear;
+  FDQuery2.SQL.Add('DROP TABLE IF EXISTS tempp');
+  FDQuery2.ExecSQL;
+  FDQuery2.SQL.Clear;
+  FDQuery2.SQL.Add('CREATE TABLE `tempp` (`image` LONGBLOB)');
+  FDQuery2.ExecSQL;
+
+  FDTable1.TableName := 'kitchen.tempp';
+  FDTable1.Active := true;
+  AStream := TMemoryStream.Create;
+  try
+    imgPassportView.Picture.Graphic.SaveToStream(AStream);
+    AStream.Position := 0;
+    if FDTable1.Active then
+    begin
+      FDTable1.Edit;
+      TBlobField(FDTable1.FieldByName('image')).LoadFromStream(AStream);
+      FDTable1.Post;
+    end;
+  finally
+    AStream.Free;
+    FDTable1.Active:= false;
+  end;
+
+  FDQuerySavePhotoNew.SQL.Clear;
+  FDQuerySavePhotoNew.SQL.Add('UPDATE `kitchen`.`register` SET `photo` = (SELECT image FROM tempp) WHERE `adm_no` = :Adm');
+  FDQuerySavePhotoNew.ParamByName('Adm').Value := frmPassports.txtAdmNo.Text;
+  FDQuerySavePhotoNew.ExecSQL;
+  Application.MessageBox('Passport changed Successfully!','Kitchen System',MB_ICONINFORMATION);
+
+end;
+
+procedure TfrmPassports.loadInitial(Sender: TObject);
+begin
+    FDQueryPhoto.SQL.Clear;
+    FDQueryPhoto.SQL.Add('SELECT path FROM passports_folder_path_table');
+    FDQueryPhoto.Open;
+    frmPassports.imgPassportView.Picture.LoadFromFile(FDQueryPhoto.FieldByName('path').Value +'none.jpg');
+end;
+
+
+
+end.

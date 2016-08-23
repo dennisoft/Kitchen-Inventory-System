@@ -1,0 +1,91 @@
+object frmPayable: TfrmPayable
+  Left = 0
+  Top = 0
+  Caption = 'Amount payable per term'
+  ClientHeight = 522
+  ClientWidth = 720
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DBGridPayable: TDBGrid
+    Left = 8
+    Top = 17
+    Width = 321
+    Height = 488
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'adm_no'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        Title.Caption = 'Term'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clGreen
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 66
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'sname'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        Title.Caption = 'Year'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clGreen
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 91
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'fname'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        Title.Caption = 'Amount Payable'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clGreen
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 128
+        Visible = True
+      end>
+  end
+  object FDQueryShow: TFDQuery
+    Connection = ConnSQL.FDConnection1
+    Left = 613
+    Top = 128
+  end
+  object DataSource1: TDataSource
+    DataSet = FDQueryShow
+    Left = 583
+    Top = 48
+  end
+end

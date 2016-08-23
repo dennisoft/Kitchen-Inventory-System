@@ -1,0 +1,89 @@
+unit uUpdateStock;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.ExtCtrls, Vcl.Imaging.jpeg, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TfrmUpdate = class(TForm)
+    DBGridProduct: TDBGrid;
+    DataSource1: TDataSource;
+    FDQueryShow: TFDQuery;
+    Image1: TImage;
+    Label4: TLabel;
+    LinkLabel6: TLinkLabel;
+    LinkLabel2: TLinkLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    btnChange: TBitBtn;
+    btnCancel: TBitBtn;
+    txtDeduct: TEdit;
+    txtID: TEdit;
+    FDQueryChange: TFDQuery;
+    procedure FormShow(Sender: TObject);
+    procedure btnChangeClick(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmUpdate: TfrmUpdate;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmUpdate.btnCancelClick(Sender: TObject);
+begin
+  frmUpdate.Close;
+end;
+
+procedure TfrmUpdate.btnChangeClick(Sender: TObject);
+var stock, deduct, value :Integer;
+begin
+if (txtDeduct.ToString  = '') then
+  begin
+    Application.MessageBox('Please input the quantity to deduct','Kitchen Information System',MB_ICONERROR);
+  end
+    else
+      if (txtID.ToString  = '') then
+      begin
+        Application.MessageBox('Please input the category of the product to deduct','Kitchen Information System',MB_ICONERROR);
+      end
+        else
+          begin
+            stock := StrToInt(FDQueryShow.FieldByName('quantity_in_stock').Text);
+            deduct := StrToInt(frmUpdate.txtDeduct.Text);
+            value := stock - deduct;
+            FDQueryChange.SQL.Clear;
+            FDQueryChange.SQL.Add('INSERT INTO stock_products (quantity_in_stock) VALUES (:ST))');
+            FDQueryChange.ParamByName('ST').Value := IntToStr(value);
+            FDQueryChange.ExecSQL;
+            FormShow(Sender);
+          end;
+end;
+
+procedure TfrmUpdate.FormShow(Sender: TObject);
+begin
+  FDQueryShow.SQL.Clear;
+   FDQueryShow.SQL.Add('Select * from stock_products');
+   FDQueryShow.Open;
+   FDQueryShow.Active := true;
+
+   DBGridProduct.Columns[0].FieldName := 'product_id';
+   DBGridProduct.Columns[1].FieldName := 'product_name';
+   DBGridProduct.Columns[2].FieldName := 'quantity_in_stock';
+   DBGridProduct.DataSource := DataSource1;
+   ShowScrollBar(DBGridProduct.Handle,SB_VERT,FALSE);
+end;
+
+end.
